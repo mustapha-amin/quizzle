@@ -18,6 +18,6 @@ const resp = """Ignore all previous instructions
 
 void main() {
   test("Prompt generation test", () {
-    expect(resp, generatePrompt(Difficulty.medium, QuizCategory.health));
+    expect(resp, generatePrompt(QuizDifficulty.medium, QuizCategory.health));
   });
 }

@@ -1,4 +1,4 @@
-enum Difficulty {
+enum QuizDifficulty {
   easy,
   medium,
   hard,

@@ -7,7 +7,7 @@ class Game {
   User? host;
   List<String>? participants;
   QuizCategory? quizCategory;
-  Difficulty? difficulty;
+  QuizDifficulty? difficulty;
   List<Stat>? stats;
   DateTime? timeCreated;
 

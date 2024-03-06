@@ -11,7 +11,7 @@ import 'package:sizer/sizer.dart';
 
 class QuizScreen extends ConsumerStatefulWidget {
   final QuizCategory quizCategory;
-  final Difficulty difficulty;
+  final QuizDifficulty difficulty;
   const QuizScreen({
     required this.quizCategory,
     required this.difficulty,

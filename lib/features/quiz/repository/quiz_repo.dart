@@ -20,7 +20,7 @@ class QuizRepo {
 
   Future<List<Quiz>> getQuizQuestions(
     QuizCategory quizCategory,
-    Difficulty difficulty,
+    QuizDifficulty difficulty,
   ) async {
     GenerateContentResponse? response;
     String prompt = generatePrompt(difficulty, quizCategory);
