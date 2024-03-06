@@ -5,10 +5,12 @@ import 'package:quizzle/firebase_options.dart';
 import 'package:sizer/sizer.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'core/typedefs.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 FutureVoid main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+  await dotenv.load(fileName: ".env");
   runApp(
     const ProviderScope(
       child: MyApp(),
