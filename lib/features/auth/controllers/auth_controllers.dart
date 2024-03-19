@@ -1,45 +1,33 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:quizzle/features/auth/repository/auth_repo.dart';
+import 'package:quizzle/models/auth_state.dart';
 
 final authControllerNotifierProvider =
-    StateNotifierProvider<AuthControllerNotifier, AsyncValue<UserCredential?>>(
-        (ref) {
+    StateNotifierProvider<AuthControllerNotifier, AuthState>((ref) {
   return AuthControllerNotifier(ref.watch(authRepoProvider));
 });
 
-class AuthControllerNotifier
-    extends StateNotifier<AsyncValue<UserCredential?>> {
+class AuthControllerNotifier extends StateNotifier<AuthState> {
   AuthRepo authRepo;
-  AuthControllerNotifier(this.authRepo) : super(const AsyncData(null));
-
-  void signInAnon() async {
-    state = const AsyncValue.loading();
-    try {
-      final userCred = await authRepo.signInAnon();
-      state = AsyncValue.data(userCred);
-    } catch (e, _) {
-      state = AsyncValue.error(e, _);
-    }
-  }
+  AuthControllerNotifier(this.authRepo) : super(AuthState.initial());
 
   void signInGoogle() async {
-    state = const AsyncLoading();
+    state = state.copyWith(isLoading: true);
     try {
       final userCred = await authRepo.googleLogin();
-      state = AsyncValue.data(userCred);
+      state = state.copyWith(isLoading: false, userCredential: userCred);
     } catch (e, _) {
-      state = AsyncValue.error(e, _);
+      state = state.copyWith(isLoading: false, error: e.toString());
     }
   }
 
   void signOutGoogle() async {
-    state = const AsyncLoading();
+    state = state.copyWith(isLoading: true);
     try {
       await authRepo.googleSignOut();
-      state = const AsyncData(null);
+      state = state.copyWith(isLoading: false, userCredential: null);
     } catch (e, _) {
-      state = AsyncValue.error(e, _);
+      state = state.copyWith(isLoading: false, error: e.toString());
     }
   }
 }

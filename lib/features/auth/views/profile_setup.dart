@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:quizzle/features/auth/controllers/user_data_controller.dart.dart';
+import 'package:quizzle/features/home/views/home.dart';
 import 'package:quizzle/shared/game_button.dart';
 import 'package:quizzle/utils/avatar_url_gen.dart';
+import 'package:quizzle/utils/dialog.dart';
+import 'package:quizzle/utils/extensions.dart';
 import 'package:sizer/sizer.dart';
 
 class AvatarSetup extends ConsumerStatefulWidget {
@@ -14,16 +18,27 @@ class AvatarSetup extends ConsumerStatefulWidget {
 class _AvatarSetupState extends ConsumerState<AvatarSetup> {
   List<String> urls = generateAvatarUrl();
   String? selectedAvatar;
-  final userNameController = TextEditingController();
+  final usernameController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
+    ref.listen(userDataControllerProvider, (previous, next) {
+      if (next == Status.data) {
+        context.push(const Home());
+      } else if(next == Status.error){
+        showCustomDialog(
+          context: context,
+          title: "Error",
+          message: "An error occured",
+        );
+      }
+    });
     return Scaffold(
       body: Column(
         children: [
           CircleAvatar(
             child: selectedAvatar != null
-                ? Image.asset(selectedAvatar!)
+                ? Image.network(selectedAvatar!)
                 : const ColoredBox(color: Colors.grey),
           ),
           Wrap(
@@ -59,7 +74,7 @@ class _AvatarSetupState extends ConsumerState<AvatarSetup> {
             ],
           ),
           TextField(
-            controller: userNameController,
+            controller: usernameController,
             decoration: const InputDecoration(
               border: OutlineInputBorder(),
               hintText: "Username",
@@ -67,7 +82,12 @@ class _AvatarSetupState extends ConsumerState<AvatarSetup> {
           ),
           GameButton(
             label: "Save profile",
-            callback: () {},
+            callback: () async {
+              await ref.read(userDataControllerProvider.notifier).saveUserData(
+                    usernameController.text.trim(),
+                    selectedAvatar!,
+                  );
+            },
             height: 10.h,
             width: 100.w,
             buttonColor: Colors.blue,

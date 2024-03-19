@@ -4,6 +4,15 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:quizzle/core/typedefs.dart';
 import 'package:quizzle/models/user.dart' as k;
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '../../../core/providers.dart';
+
+final userDataRepoProvider = Provider((ref) {
+  return UserDataRepo(
+    firebaseFirestore: ref.watch(firestoreProvider),
+    firebaseAuth: ref.watch(firebaseAuthProvider),
+  );
+});
 
 class UserDataRepo {
   final FirebaseFirestore firebaseFirestore;
@@ -26,6 +35,7 @@ class UserDataRepo {
           .set(user.toJson());
     } catch (e) {
       log(e.toString());
+      throw Exception(e.toString());
     }
   }
 
@@ -48,6 +58,7 @@ class UserDataRepo {
       });
     } catch (e) {
       log(e.toString());
+      throw Exception(e.toString());
     }
   }
 }

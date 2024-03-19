@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:sizer/sizer.dart';
 
 TextStyle kTextStyle(
   double size, {
-  FontWeight? fontWeight,
+  bool? isBold = false,
   Color? color,
 }) {
-  return GoogleFonts.poppins(
+  return TextStyle(
     fontSize: size.sp,
-    fontWeight: fontWeight ?? FontWeight.normal,
+    fontWeight: isBold! ? FontWeight.w700 : FontWeight.normal,
     color: color ?? Colors.white,
+    fontFamily: "Montserrat",
   );
 }

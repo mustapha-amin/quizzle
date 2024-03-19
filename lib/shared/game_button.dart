@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:quizzle/utils/extensions.dart';
 import '../utils/textstyle.dart';
 
 class GameButton extends StatefulWidget {
@@ -21,58 +22,24 @@ class GameButton extends StatefulWidget {
   State<GameButton> createState() => _GameButtonState();
 }
 
-class _GameButtonState extends State<GameButton>
-    with SingleTickerProviderStateMixin {
-  late AnimationController animationController;
-  late Animation<Size?> _sizeAnimation;
-
-  @override
-  void initState() {
-    super.initState();
-    animationController = AnimationController(
-      duration: const Duration(milliseconds: 600),
-      vsync: this,
-    )..addStatusListener((status) {
-        if (status == AnimationStatus.completed) {
-          animationController.reverse();
-        }
-      });
-
-    _sizeAnimation = SizeTween(
-      begin: Size(widget.width, widget.height),
-      end: Size(widget.width + 30, widget.height + 10),
-    ).animate(animationController);
-  }
-
-  @override
-  void dispose() {
-    animationController.dispose();
-    super.dispose();
-  }
-
+class _GameButtonState extends State<GameButton> {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () async {
-        animationController.forward();
-        await Future.delayed(
-            const Duration(milliseconds: 800), () => widget.callback);
+      onTap: () {
+        widget.callback.call();
       },
-      child: AnimatedBuilder(
-        animation: animationController,
-        builder: (context, _) {
-          return Container(
-            width: _sizeAnimation.value!.width,
-            height: _sizeAnimation.value!.height,
-            decoration: BoxDecoration(
-              color: widget.buttonColor,
-            ),
-            child: Text(
-              widget.label,
-              style: kTextStyle(widget.labelFontSize, color: widget.labelColor),
-            ),
-          );
-        },
+      child: Container(
+        width: widget.width,
+        height: widget.height,
+        decoration: BoxDecoration(
+          color: widget.buttonColor,
+          borderRadius: BorderRadius.circular(10),
+        ),
+        child: Text(
+          widget.label,
+          style: kTextStyle(widget.labelFontSize, color: widget.labelColor),
+        ).centralize(),
       ),
     );
   }

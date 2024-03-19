@@ -19,15 +19,6 @@ class AuthRepo {
 
   Stream<User?> get authStateChanges => firebaseAuth.authStateChanges();
 
-  FutureUserCred signInAnon() async {
-    try {
-      final userCred = await firebaseAuth.signInAnonymously();
-      return userCred;
-    } on FirebaseAuthException catch (e) {
-      throw Exception(e.message);
-    }
-  }
-
   FutureUserCred googleLogin() async {
     try {
       final googleAcct = await googleSignIn.signIn();

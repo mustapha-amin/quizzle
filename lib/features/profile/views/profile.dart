@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:quizzle/core/providers.dart';
 
 class ProfileScreen extends ConsumerStatefulWidget {
   const ProfileScreen({super.key});
@@ -15,7 +16,17 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
       body: CustomScrollView(
         slivers: [
           SliverToBoxAdapter(
-            child: CircleAvatar(),
+            child: Hero(
+              tag: 'avatar',
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(20),
+                child: ref.watch(currentUserProvider).when(
+                      data: (user) => Image.network(user!.avatar!),
+                      error: (_, __) => const Icon(Icons.error),
+                      loading: () => const CircularProgressIndicator(),
+                    ),
+              ),
+            ),
           )
         ],
       ),
