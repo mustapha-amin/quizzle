@@ -35,6 +35,7 @@ class _QuizResultsState extends ConsumerState<QuizResults> {
                   height: 35.w,
                   width: 35.w,
                   child: TweenAnimationBuilder(
+                    curve: Curves.easeInOutCubic,
                     tween: Tween<double>(
                       begin: 0,
                       end: quizProgressCtrl.scoreAndRemark!.$1 / 20,

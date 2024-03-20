@@ -42,6 +42,6 @@ and relevance in every question.
   Ensure that options array isn't empty,
   Ensure that the answer value isn't empty,
   Enswer that the question value isn't empty
-  Ensure that the total number of questions in the array are equal to 20
+  Ensure that the total number of items in the array are equal to 20
     """;
 }
