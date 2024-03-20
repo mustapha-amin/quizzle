@@ -55,7 +55,10 @@ class _QuizScreenState extends ConsumerState<QuizScreen> {
                     onPressed: () {
                       Navigator.of(context).pop();
                     },
-                    child: const Text("No"),
+                    child: Text(
+                      "No",
+                      style: kTextStyle(12, color: Colors.green),
+                    ),
                   ),
                   TextButton(
                     style: TextButton.styleFrom(
@@ -65,7 +68,10 @@ class _QuizScreenState extends ConsumerState<QuizScreen> {
                       Navigator.of(context).pop();
                       Navigator.pop(context);
                     },
-                    child: const Text("Yes"),
+                    child: Text(
+                      "Yes",
+                      style: kTextStyle(12, color: Colors.red),
+                    ),
                   ),
                 ],
               );

@@ -22,7 +22,7 @@ class QuizQuestionsCtrl extends StateNotifier<QuizzesState> {
         category,
         difficulty,
       );
-      log("Questions length${questions.length}");
+      log("Questions length ${questions.length}");
       state = state.copyWith(isLoading: false, quizzes: questions);
     } catch (e) {
       state = state.copyWith(isLoading: false, error: e.toString());

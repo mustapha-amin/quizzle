@@ -25,12 +25,9 @@ class QuizRepo {
   ) async {
     GenerateContentResponse? response;
     String prompt = generatePrompt(difficulty, quizCategory);
-    log(prompt);
     try {
       response = await _generativeModel.generateContent([Content.text(prompt)]);
-      log(response.text!);
       List<dynamic> responseJson = jsonDecode(response.text!);
-      log(responseJson.toString());
       return responseJson.map((json) => Quiz.fromJson(json)).toList();
     } on SocketException catch (_) {
       log("Please check your internet and try again");

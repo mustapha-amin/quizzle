@@ -35,11 +35,11 @@ class OptionWidget extends StatelessWidget {
           child: Text(
             option,
             style: kTextStyle(
-              15,
+              12,
               color: Colors.black,
             ),
           ),
-        ),
+        ).padAll(2),
       ),
     ).padAll(8);
   }
