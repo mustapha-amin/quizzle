@@ -169,7 +169,12 @@ class _QuizScreenState extends ConsumerState<QuizScreen> {
                               ref
                                   .read(quizProgressNotifierProvider.notifier)
                                   .computeScore();
-                              context.push(const QuizResults());
+                              Navigator.pushReplacement(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => const QuizResults(),
+                                ),
+                              );
                             }
                           }
                         },
