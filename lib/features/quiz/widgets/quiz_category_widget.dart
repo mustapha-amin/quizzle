@@ -19,9 +19,9 @@ class QuizCategoryWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(25),
+        borderRadius: BorderRadius.circular(20),
       ),
-      elevation: 4,
+      elevation: 3,
       shadowColor: Colors.grey[200],
       child: SizedBox(
         height: 28.h,
@@ -64,7 +64,7 @@ class QuizCategoryWidget extends StatelessWidget {
                   onPressed: callback,
                   child: Text(
                     "Play now",
-                    style: kTextStyle(15),
+                    style: kTextStyle(15, color: Colors.white, isBold: true),
                   ),
                 )
               ],

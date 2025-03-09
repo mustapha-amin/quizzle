@@ -25,6 +25,7 @@ class QuizQuestionsCtrl extends StateNotifier<QuizzesState> {
       log("Questions length ${questions.length}");
       state = state.copyWith(isLoading: false, quizzes: questions);
     } catch (e) {
+      log(e.toString());
       state = state.copyWith(isLoading: false, error: e.toString());
     }
   }

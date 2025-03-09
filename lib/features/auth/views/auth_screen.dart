@@ -71,6 +71,7 @@ class _AuthScreenState extends ConsumerState<AuthScreen> {
                     }
                   },
                   child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       SvgPicture.asset(
                         ImagePaths.google,
@@ -78,10 +79,8 @@ class _AuthScreenState extends ConsumerState<AuthScreen> {
                       ),
                       Text(
                         "Sign in with google",
-                        style: kTextStyle(
-                          15,
-                          isBold: true,
-                        ),
+                        style:
+                            kTextStyle(18, isBold: true, color: Colors.white),
                       )
                     ],
                   ),

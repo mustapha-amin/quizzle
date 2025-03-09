@@ -61,7 +61,7 @@ class _QuizResultsState extends ConsumerState<QuizResults> {
                         QuizRemark.good => Colors.amber[700],
                         QuizRemark.veryGood => Colors.green[400],
                         QuizRemark.excellent => Colors.green[800],
-                      },
+                      }!,
                       isBold: true,
                     ),
                     children: [
@@ -76,7 +76,7 @@ class _QuizResultsState extends ConsumerState<QuizResults> {
                         text: '20 ',
                         style: kTextStyle(
                           30,
-                          color: Colors.green[800],
+                          color: Colors.green[800]!,
                           isBold: true,
                         ),
                       )
@@ -99,7 +99,7 @@ class _QuizResultsState extends ConsumerState<QuizResults> {
                   QuizRemark.good => Colors.amber[700],
                   QuizRemark.veryGood => Colors.green[400],
                   QuizRemark.excellent => Colors.green[800],
-                },
+                }!,
               ),
             ).centralize(),
             Card(

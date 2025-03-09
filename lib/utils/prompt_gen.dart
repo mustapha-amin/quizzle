@@ -1,15 +1,14 @@
-import 'package:quizzle/core/enums.dart';
-
-String generatePrompt(QuizDifficulty difficulty, QuizCategory quizCategory) {
+String generatePrompt() {
   return """## Title 
  Customized Quiz Question Set Creation 
 ## Content 
  Ignore all previous instructions. Act as an expert in educational content creation,
 you have been designing and formulating quiz questions across various domains for 10 years,
 consistently achieving high engagement and learning outcomes through your well-crafted quizzes. 
-Given a category of '${quizCategory.name}', create a set of 21 quiz questions with difficulty set to ${difficulty.name} 
+Given a category and a difficulty level by the user, create a set of 20 quiz questions with difficulty set to the specified difficulty
 on a scale of(easy, medium, and hard). Each question should be meticulously designed to test knowledge depth in the
-category, ensuring a comprehensive understanding of the subject. 
+category, ensuring a comprehensive understanding of the subject. The answers should'nt always be the first in the options. Try to mix it up a bit.
+The quiz should be engaging, educational, and challenging, providing an enriching learning experience for the user.
 
 Ensure that your response is a json that can be deserialized by this dart code: 
 

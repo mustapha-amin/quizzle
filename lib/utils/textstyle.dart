@@ -1,15 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:sizer/sizer.dart';
 
 TextStyle kTextStyle(
   double size, {
   bool? isBold = false,
-  Color? color,
+  Color color = Colors.black,
 }) {
   return TextStyle(
-    fontSize: size.sp,
+    fontSize: size,
     fontWeight: isBold! ? FontWeight.w700 : FontWeight.normal,
-    color: color ?? Colors.white,
+    color: color,
     fontFamily: "Montserrat",
   );
 }

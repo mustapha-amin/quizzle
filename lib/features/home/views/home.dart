@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:iconsax_flutter/iconsax_flutter.dart';
 import 'package:quizzle/core/providers.dart';
+import 'package:quizzle/features/home/widgets/game_mode.dart';
 import 'package:quizzle/features/quiz/views/quiz_categories.dart';
+import 'package:quizzle/features/quiz/views/quiz_screen.dart';
 import 'package:quizzle/utils/dialog.dart';
 import 'package:quizzle/utils/extensions.dart';
+import 'package:sizer/sizer.dart';
 
 import '../../../utils/textstyle.dart';
 
@@ -27,10 +31,10 @@ class _HomeState extends ConsumerState<Home> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(
-          "Available game rooms",
-          style: kTextStyle(17, color: Colors.black),
-        ),
+        // title: Text(
+        //   "Available game rooms",
+        //   style: kTextStyle(17, color: Colors.black),
+        // ),
         actions: [
           ref.watch(firebaseAuthProvider).currentUser == null
               ? const SizedBox()
@@ -47,71 +51,27 @@ class _HomeState extends ConsumerState<Home> {
                 ),
         ],
       ),
-      body: SingleChildScrollView(
-        child: Column(
-          children: [],
-        ),
-      ),
-      floatingActionButton: Column(
-        mainAxisAlignment: MainAxisAlignment.end,
+      body: Column(
+        spacing: 50,
         children: [
-          if (_fabExpanded)
-            Column(
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    Text(
-                      "Single player",
-                      style: kTextStyle(12, color: Colors.black),
-                    ),
-                    const SizedBox(width: 5),
-                    FloatingActionButton(
-                      heroTag: null,
-                      tooltip: "single player",
-                      onPressed: () {
-                        context.push(const QuizCategories());
-                      },
-                      child: const Icon(Icons.person),
-                    ),
-                  ],
-                ).padY(7),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    Text(
-                      "Multiplayer",
-                      style: kTextStyle(12, color: Colors.black),
-                    ),
-                    const SizedBox(width: 5),
-                    FloatingActionButton(
-                      heroTag: null,
-                      tooltip: "multiplayer",
-                      onPressed: () {
-                        final user =
-                            ref.watch(firebaseAuthProvider).currentUser;
-                        if (user == null) {
-                        } else {
-                          context.push(const QuizCategories());
-                        }
-                      },
-                      child: const Icon(Icons.people),
-                    ),
-                  ],
-                ).padY(7),
-              ],
-            ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.end,
+          Text("Select a game mode", style: kTextStyle(25, isBold: true)),
+          Column(
+            spacing: 20,
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              FloatingActionButton(
-                heroTag: null,
-                tooltip: "game options",
-                onPressed: _toggleFab,
-                child: Icon(_fabExpanded ? Icons.close : Icons.add),
+              GameMode(
+                img: "assets/images/single.png",
+                label: "Single player",
+                destination: QuizCategories(),
+              ),
+              GameMode(
+                img: "assets/images/multi.jpg",
+                label: "1 v 1",
+                destination: Scaffold(),
               ),
             ],
-          ).padY(7),
+          ).centralize(),
         ],
       ),
     );

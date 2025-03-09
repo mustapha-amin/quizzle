@@ -14,7 +14,7 @@ import 'features/home/views/home.dart';
 FutureVoid main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
-  await dotenv.load(fileName: ".env");
+  // await dotenv.load(fileName: ".env");
   runApp(
     const ProviderScope(
       child: MyApp(),
