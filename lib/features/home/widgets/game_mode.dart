@@ -18,6 +18,7 @@ class GameMode extends StatelessWidget {
       children: [
         InkWell(
           onTap: onTap,
+          customBorder: const CircleBorder(),
           child: Container(
             width: 50.w,
             height: 50.w,
