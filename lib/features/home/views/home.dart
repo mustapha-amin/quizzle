@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:iconsax_flutter/iconsax_flutter.dart';
@@ -21,22 +23,24 @@ class Home extends ConsumerStatefulWidget {
 class _HomeState extends ConsumerState<Home> {
   bool _fabExpanded = false;
 
-  void _toggleFab() {
-    setState(() {
-      _fabExpanded = !_fabExpanded;
-    });
-  }
+  // void _toggleFab() {
+  //   setState(() {
+  //     _fabExpanded = !_fabExpanded;
+  //   });
+  // }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Colors.white,
         // title: Text(
         //   "Available game rooms",
         //   style: kTextStyle(17, color: Colors.black),
         // ),
         actions: [
-          ref.watch(firebaseAuthProvider).currentUser == null
+          ref.watch(firebaseAuthProvider).currentUser == null ||
+                  ref.watch(firebaseAuthProvider).currentUser!.isAnonymous
               ? const SizedBox()
               : Hero(
                   tag: 'avatar',
@@ -63,12 +67,30 @@ class _HomeState extends ConsumerState<Home> {
               GameMode(
                 img: "assets/images/single.png",
                 label: "Single player",
-                destination: QuizCategories(),
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const QuizCategories(),
+                    ),
+                  );
+                },
               ),
               GameMode(
                 img: "assets/images/multi.jpg",
                 label: "1 v 1",
-                destination: Scaffold(),
+                onTap: () {
+                  if (ref
+                      .watch(firebaseAuthProvider)
+                      .currentUser!
+                      .isAnonymous) {
+                    showCustomDialog(
+                      context: context,
+                      title: "Multiplayer",
+                      message: "Sign in to play multiplayer mode",
+                    );
+                  }
+                },
               ),
             ],
           ).centralize(),

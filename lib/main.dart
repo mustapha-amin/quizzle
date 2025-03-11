@@ -1,3 +1,4 @@
+import 'package:shadcn_ui/shadcn_ui.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:quizzle/features/auth/views/auth_screen.dart';
@@ -6,7 +7,6 @@ import 'package:sizer/sizer.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'core/typedefs.dart';
 import 'core/providers.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'dart:developer';
 import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'features/home/views/home.dart';
@@ -45,12 +45,11 @@ class _MyAppState extends ConsumerState<MyApp> {
     final firebaseAuth = ref.watch(firebaseAuthProvider);
     return Sizer(
       builder: (context, _, __) {
-        return MaterialApp(
+        return ShadApp.material(
           debugShowCheckedModeBanner: false,
-          theme: FlexThemeData.light(
-            scheme: FlexScheme.green,
-            useMaterial3: true,
-          ),
+          theme: ShadThemeData(
+              colorScheme: ShadColorScheme.fromName('green'),
+              brightness: Brightness.light),
           home: firebaseAuth.currentUser == null
               ? const AuthScreen()
               : const Home(),

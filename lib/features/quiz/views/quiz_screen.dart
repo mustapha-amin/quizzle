@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
+import 'package:shadcn_ui/shadcn_ui.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:quizzle/features/quiz/controllers/quiz_fetcher.dart';
 import 'package:quizzle/features/quiz/controllers/quiz_progress_ctrl.dart';
@@ -33,7 +34,7 @@ class _QuizScreenState extends ConsumerState<QuizScreen> {
     final currentQuestionIndex = quizProgress.index + 1;
     return PopScope(
       canPop: false,
-      onPopInvoked: (didPop) {
+      onPopInvokedWithResult: (didPop, _) {
         if (!didPop) {
           showDialog(
             context: context,
@@ -97,7 +98,7 @@ class _QuizScreenState extends ConsumerState<QuizScreen> {
                       begin: 0, end: currentQuestionIndex.toDouble()),
                   duration: const Duration(milliseconds: 500),
                   builder: (context, value, _) {
-                    return LinearProgressIndicator(
+                    return ShadProgress(
                       borderRadius: BorderRadius.circular(6),
                       value: value / 20,
                       color: Theme.of(context).primaryColor,
@@ -114,20 +115,21 @@ class _QuizScreenState extends ConsumerState<QuizScreen> {
                   Text(
                     quizzesProvider.quizzes![quizProgress.index].question,
                     style: kTextStyle(
-                      23,
+                      18,
                       color: Colors.black,
                       isBold: true,
                     ),
-                  ).padX(8),
+                  ).padX(10),
                   ...quizzesProvider.quizzes![quizProgress.index].options.map(
                     (option) {
                       return OptionWidget(
                         option: option,
-                        color: ref
-                                .watch(quizProgressNotifierProvider.notifier)
-                                .answerIsSelected(option, quizProgress.index)
-                            ? Colors.amber[600]!
-                            : Colors.white,
+                        index: quizzesProvider
+                            .quizzes![quizProgress.index].options
+                            .indexOf(option),
+                        isSelected: ref
+                            .watch(quizProgressNotifierProvider.notifier)
+                            .answerIsSelected(option, quizProgress.index),
                         onPressed: () {
                           ref
                               .read(quizProgressNotifierProvider.notifier)
@@ -146,7 +148,7 @@ class _QuizScreenState extends ConsumerState<QuizScreen> {
                               .read(quizProgressNotifierProvider.notifier)
                               .prev();
                         },
-                        height: 7.h,
+                        height: 6.h,
                         width: 38.w,
                         buttonColor: currentQuestionIndex == 1
                             ? Colors.grey
@@ -178,7 +180,7 @@ class _QuizScreenState extends ConsumerState<QuizScreen> {
                             }
                           }
                         },
-                        height: 7.h,
+                        height: 6.h,
                         width: 38.w,
                         buttonColor: ref
                                 .read(quizProgressNotifierProvider.notifier)

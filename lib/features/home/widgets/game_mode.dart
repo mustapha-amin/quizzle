@@ -4,20 +4,20 @@ import 'package:sizer/sizer.dart';
 
 class GameMode extends StatelessWidget {
   String img, label;
-  Widget destination;
-  GameMode({required this.img, required this.label, required this.destination, super.key});
+  VoidCallback onTap;
+  GameMode({
+    required this.img,
+    required this.label,
+    required this.onTap,
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
         InkWell(
-          onTap: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => destination),
-            );
-          },
+          onTap: onTap,
           child: Container(
             width: 50.w,
             height: 50.w,

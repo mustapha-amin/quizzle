@@ -88,6 +88,9 @@ class _AuthScreenState extends ConsumerState<AuthScreen> {
               ),
               TextButton(
                 onPressed: () {
+                  ref
+                      .read(authControllerNotifierProvider.notifier)
+                      .signInAnon();
                   Navigator.pushReplacement(context,
                       MaterialPageRoute(builder: (context) {
                     return const Home();

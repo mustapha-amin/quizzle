@@ -1,9 +1,12 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:quizzle/core/enums.dart';
 import 'package:quizzle/features/quiz/controllers/quiz_fetcher.dart';
 import 'package:quizzle/utils/extensions.dart';
 import 'package:quizzle/utils/textstyle.dart';
+import 'package:shadcn_ui/shadcn_ui.dart';
 import 'package:sizer/sizer.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../widgets/quiz_category_widget.dart';
@@ -18,6 +21,8 @@ class QuizCategories extends ConsumerStatefulWidget {
 }
 
 class _QuizCategoriesState extends ConsumerState<QuizCategories> {
+  double initial = 0;
+
   @override
   Widget build(BuildContext context) {
     ref.listen(quizQuistionsCtrlProvider, (_, next) {
@@ -62,16 +67,20 @@ class _QuizCategoriesState extends ConsumerState<QuizCategories> {
                                 return StatefulBuilder(
                                     builder: (context, setState) {
                                   return SimpleDialog(
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(15),
+                                    ),
                                     contentPadding: const EdgeInsets.fromLTRB(
                                       10,
-                                      5,
+                                      8,
                                       10,
                                       10,
                                     ),
+                                    titlePadding: EdgeInsets.all(15),
                                     title: Text(
                                       "Select difficulty",
                                       style: kTextStyle(
-                                        20,
+                                        16,
                                         color: Colors.black,
                                         isBold: true,
                                       ),
@@ -92,42 +101,47 @@ class _QuizCategoriesState extends ConsumerState<QuizCategories> {
                                                     _ => "Hard",
                                                   },
                                                   style: kTextStyle(
-                                                    15,
+                                                    14,
                                                     color: Colors.black,
                                                   ),
-                                                ),
-                                                IconButton(
-                                                  iconSize: 30,
-                                                  onPressed: () {
-                                                    setState(() {
-                                                      selectedIndex = index;
-                                                    });
-                                                  },
-                                                  icon: Icon(Icons.star,
-                                                      color:
-                                                          selectedIndex >= index
-                                                              ? Colors.amber
-                                                              : Colors.grey),
                                                 ),
                                               ],
                                             ),
                                           )
                                         ],
                                       ),
+                                      ShadSlider(
+                                        divisions: 2,
+                                        initialValue: initial,
+                                        min: 0,
+                                        max: 90,
+                                        thumbColor: switch (initial) {
+                                          0 => Colors.green,
+                                          45 => Colors.amber,
+                                          _ => Colors.red,
+                                        },
+                                        activeTrackColor: switch (initial) {
+                                          0 => Colors.green,
+                                          45 => Colors.amber,
+                                          _ => Colors.red,
+                                        },
+                                        thumbBorderColor: switch (initial) {
+                                          0 => Colors.green,
+                                          45 => Colors.amber,
+                                          _ => Colors.red,
+                                        },
+                                        onChangeEnd: (value) {
+                                          log(value.toString());
+                                          setState(() => initial = value);
+                                        },
+                                      ).padY(10),
                                       Row(
                                         mainAxisAlignment:
                                             MainAxisAlignment.spaceAround,
                                         children: [
                                           SizedBox(
                                             width: 35.w,
-                                            child: TextButton(
-                                              style: TextButton.styleFrom(
-                                                foregroundColor: Colors.red,
-                                                shape: RoundedRectangleBorder(
-                                                  borderRadius:
-                                                      BorderRadius.circular(12),
-                                                ),
-                                              ),
+                                            child: ShadButton.ghost(
                                               onPressed: () {
                                                 Navigator.of(context).pop();
                                               },
@@ -142,15 +156,8 @@ class _QuizCategoriesState extends ConsumerState<QuizCategories> {
                                           ),
                                           SizedBox(
                                             width: 35.w,
-                                            child: ElevatedButton(
-                                              style: ElevatedButton.styleFrom(
-                                                backgroundColor:
-                                                    Colors.blue[800],
-                                                shape: RoundedRectangleBorder(
-                                                  borderRadius:
-                                                      BorderRadius.circular(12),
-                                                ),
-                                              ),
+                                            child: ShadButton(
+                                              backgroundColor: Colors.blue,
                                               onPressed: () {
                                                 Navigator.of(context).pop();
                                                 ref
@@ -159,10 +166,10 @@ class _QuizCategoriesState extends ConsumerState<QuizCategories> {
                                                             .notifier)
                                                     .fetchQuestions(
                                                         category,
-                                                        switch (selectedIndex) {
+                                                        switch (initial) {
                                                           0 =>
                                                             QuizDifficulty.easy,
-                                                          1 => QuizDifficulty
+                                                          45 => QuizDifficulty
                                                               .medium,
                                                           _ =>
                                                             QuizDifficulty.hard,
@@ -173,6 +180,7 @@ class _QuizCategoriesState extends ConsumerState<QuizCategories> {
                                                 style: kTextStyle(
                                                   14,
                                                   color: Colors.white,
+                                                  isBold: true,
                                                 ),
                                               ),
                                             ),

@@ -25,24 +25,26 @@ class QuizRepo {
     QuizDifficulty difficulty,
   ) async {
     try {
-     final response = await _dio.post(
-      "/chat/completions",
-      data: {
-        "model": "deepseek/deepseek-chat:free",
-        "messages": [
-          {"role": "system", "content": generatePrompt()},
-          {
-            "role": "user",
-            "content": "Category: ${quizCategory.name}, Difficulty: ${difficulty.name}"
-          }
-        ],
-        "stream": false
-      },
-    );
+      final response = await _dio.post(
+        "/chat/completions",
+        data: {
+          "model": "deepseek/deepseek-chat:free",
+          "messages": [
+            {"role": "system", "content": generatePrompt()},
+            {
+              "role": "user",
+              "content":
+                  "Category: ${quizCategory.name}, Difficulty: ${difficulty.name}"
+            }
+          ],
+          "stream": false
+        },
+      );
 
-    final contentString = response.data["choices"][0]["message"]["content"] as String;
-    final List<dynamic> responseJson = jsonDecode(contentString);
-    return responseJson.map((json) => Quiz.fromJson(json)).toList();
+      final contentString =
+          response.data["choices"][0]["message"]["content"] as String;
+      final List<dynamic> responseJson = jsonDecode(contentString);
+      return responseJson.map((json) => Quiz.fromJson(json)).toList();
     } on SocketException catch (_) {
       log("Please check your internet and try again");
       throw Exception("Please check your internet and try again");

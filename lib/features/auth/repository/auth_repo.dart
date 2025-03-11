@@ -47,4 +47,13 @@ class AuthRepo {
   FutureVoid updateAvatar(String? url) async {
     await firebaseAuth.currentUser!.updatePhotoURL(url);
   }
+
+  FutureUserCred signInAnon() async {
+    try {
+      final userCred = await firebaseAuth.signInAnonymously();
+      return userCred;
+    } on FirebaseAuthException catch (e) {
+      throw Exception(e.message);
+    }
+  }
 }

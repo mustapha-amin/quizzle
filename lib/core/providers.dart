@@ -20,7 +20,7 @@ final dioProvider = Provider<Dio>((ref) {
     headers: {
       "Authorization": "Bearer ${Env.deepseekApiKey}",
       'Content-Type': 'application/json',
-      'temperature': 0.7,
+      'temperature': 0.1,
     },
   ))
     ..interceptors.add(

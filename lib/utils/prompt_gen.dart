@@ -9,6 +9,7 @@ Given a category and a difficulty level by the user, create a set of 20 quiz que
 on a scale of(easy, medium, and hard). Each question should be meticulously designed to test knowledge depth in the
 category, ensuring a comprehensive understanding of the subject. The answers should'nt always be the first in the options. Try to mix it up a bit.
 The quiz should be engaging, educational, and challenging, providing an enriching learning experience for the user.
+Each option should'nt be more than 40 charcters long
 
 Ensure that your response is a json that can be deserialized by this dart code: 
 

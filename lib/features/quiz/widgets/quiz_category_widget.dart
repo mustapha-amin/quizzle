@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:iconsax_flutter/iconsax_flutter.dart';
 import 'package:quizzle/core/enums.dart';
 import 'package:quizzle/utils/extensions.dart';
 import 'package:quizzle/utils/textstyle.dart';
+import 'package:shadcn_ui/shadcn_ui.dart';
 import 'package:sizer/sizer.dart';
 
 import '../../../core/image_paths.dart';
@@ -17,12 +19,11 @@ class QuizCategoryWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(20),
-      ),
-      elevation: 3,
-      shadowColor: Colors.grey[200],
+    return ShadCard(
+      radius: BorderRadius.circular(20),
+      padding: EdgeInsets.all(0),
+      //elevation: 3,
+      // shadowColor: Colors.grey[200],
       child: SizedBox(
         height: 28.h,
         child: Column(
@@ -51,21 +52,19 @@ class QuizCategoryWidget extends StatelessWidget {
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              crossAxisAlignment: CrossAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Text(
                   category.name.capitalizeFirst,
                   style: kTextStyle(20, color: Colors.black, isBold: true),
                 ),
-                ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Theme.of(context).primaryColor,
+                ShadIconButton(
+                  icon: Icon(
+                    Iconsax.game_copy,
+                    color: Colors.white,
+                    size: 28,
                   ),
                   onPressed: callback,
-                  child: Text(
-                    "Play now",
-                    style: kTextStyle(15, color: Colors.white, isBold: true),
-                  ),
                 )
               ],
             ).padX(20),

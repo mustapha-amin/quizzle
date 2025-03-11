@@ -30,4 +30,14 @@ class AuthControllerNotifier extends StateNotifier<AuthState> {
       state = state.copyWith(isLoading: false, error: e.toString());
     }
   }
+
+  void signInAnon() async {
+    state = state.copyWith(isLoading: true);
+    try {
+      final userCred = await authRepo.signInAnon();
+      state = state.copyWith(isLoading: false, userCredential: userCred);
+    } catch (e, _) {
+      state = state.copyWith(isLoading: false, error: e.toString());
+    }
+  }
 }
