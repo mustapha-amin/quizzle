@@ -1,14 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:shadcn_ui/shadcn_ui.dart';
 
-
-void showCustomDialog({required BuildContext context, required String title, required String message}) {
+void showCustomDialog(
+    {required BuildContext context,
+    required String title,
+    required String message}) {
   showDialog(
     context: context,
     builder: (context) {
-      return ShadDialog(
+      return AlertDialog(
         title: Text(title),
-        description: Text(message),
+        content: Text(message),
         actions: [
           TextButton(
             onPressed: () {

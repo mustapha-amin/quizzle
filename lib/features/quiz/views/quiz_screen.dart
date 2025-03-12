@@ -84,7 +84,7 @@ class _QuizScreenState extends ConsumerState<QuizScreen> {
         appBar: AppBar(
           title: Text(
             "$currentQuestionIndex / 20",
-            style: kTextStyle(20, color: Colors.black),
+            style: kTextStyle(16, color: Colors.black),
           ),
           centerTitle: true,
         ),
@@ -102,7 +102,7 @@ class _QuizScreenState extends ConsumerState<QuizScreen> {
                       borderRadius: BorderRadius.circular(6),
                       value: value / 20,
                       color: Theme.of(context).primaryColor,
-                      backgroundColor: Colors.grey,
+                      backgroundColor: Color(0xfff0f0f0),
                     ).padX(5);
                   },
                 ),
@@ -148,16 +148,14 @@ class _QuizScreenState extends ConsumerState<QuizScreen> {
                               .read(quizProgressNotifierProvider.notifier)
                               .prev();
                         },
-                        height: 6.h,
-                        width: 38.w,
                         buttonColor: currentQuestionIndex == 1
                             ? Colors.grey
                             : Theme.of(context).primaryColor,
                         labelColor: Colors.white,
-                        labelFontSize: 20,
+                        labelFontSize: 16,
                       ),
                       GameButton(
-                        label: currentQuestionIndex == 20 ? "Complete" : "Next",
+                        label: currentQuestionIndex == 20 ? "Submit" : "Next",
                         callback: () {
                           log(quizProgress.selectedAnswers.toString());
                           if (ref
@@ -180,15 +178,13 @@ class _QuizScreenState extends ConsumerState<QuizScreen> {
                             }
                           }
                         },
-                        height: 6.h,
-                        width: 38.w,
                         buttonColor: ref
                                 .read(quizProgressNotifierProvider.notifier)
                                 .answerSlotNotEmpty(quizProgress.index)
                             ? Theme.of(context).primaryColor
                             : Colors.grey,
                         labelColor: Colors.white,
-                        labelFontSize: 20,
+                        labelFontSize: 16,
                       ),
                     ],
                   ).padAll(8)

@@ -32,6 +32,7 @@ dependencies:
   cupertino_icons: ^1.0.2
   dio: ^5.8.0+1
   envied: ^1.1.1
+  figma_squircle: ^0.6.3
   firebase_auth: ^4.17.6
   firebase_core: ^2.25.5
   firebase_storage: ^11.6.9
@@ -94,3 +95,7 @@ flutter:
 flutter_native_splash:
   color: "#E6E8E0"
   image: assets/images/logo.png
+
+  android_12:
+    image: assets/images/logo.png
+    color: "#E6E8E0"

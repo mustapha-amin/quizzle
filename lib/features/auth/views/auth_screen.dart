@@ -6,11 +6,12 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:quizzle/core/image_paths.dart';
 import 'package:quizzle/features/auth/controllers/auth_controllers.dart';
+import 'package:quizzle/features/quiz/views/quiz_categories.dart';
 import 'package:quizzle/utils/extensions.dart';
 import 'package:quizzle/utils/textstyle.dart';
 import 'package:sizer/sizer.dart';
 
-import '../../home/views/home.dart';
+import '../../game mode/views/game_mode.dart';
 
 class AuthScreen extends ConsumerStatefulWidget {
   const AuthScreen({super.key});
@@ -64,7 +65,7 @@ class _AuthScreenState extends ConsumerState<AuthScreen> {
                           .signInGoogle();
                       Navigator.pushReplacement(context,
                           MaterialPageRoute(builder: (context) {
-                        return const Home();
+                        return const QuizCategories();
                       }));
                     } catch (e) {
                       log(e.toString());
@@ -93,7 +94,7 @@ class _AuthScreenState extends ConsumerState<AuthScreen> {
                       .signInAnon();
                   Navigator.pushReplacement(context,
                       MaterialPageRoute(builder: (context) {
-                    return const Home();
+                    return const QuizCategories();
                   }));
                 },
                 child: Text(

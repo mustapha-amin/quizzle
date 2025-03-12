@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:quizzle/utils/extensions.dart';
+import 'package:shadcn_ui/shadcn_ui.dart';
+import 'package:sizer/sizer.dart';
 import '../utils/textstyle.dart';
 
 class GameButton extends StatefulWidget {
   final String label;
   final VoidCallback callback;
-  final double width, height, labelFontSize;
+  final double labelFontSize;
   final Color buttonColor, labelColor;
   const GameButton({
     required this.label,
     required this.callback,
-    required this.height,
-    required this.width,
     required this.buttonColor,
     required this.labelColor,
     required this.labelFontSize,
@@ -25,21 +25,15 @@ class GameButton extends StatefulWidget {
 class _GameButtonState extends State<GameButton> {
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-      onTap: () {
-        widget.callback.call();
-      },
-      child: Container(
-        width: widget.width,
-        height: widget.height,
-        decoration: BoxDecoration(
-          color: widget.buttonColor,
-          borderRadius: BorderRadius.circular(10),
-        ),
+    return SizedBox(
+      width: 28.w,
+      child: ShadButton(
         child: Text(
           widget.label,
           style: kTextStyle(widget.labelFontSize, color: widget.labelColor),
-        ).centralize(),
+        ),
+        onPressed: widget.callback,
+        backgroundColor: widget.buttonColor,
       ),
     );
   }

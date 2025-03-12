@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:quizzle/features/auth/controllers/user_data_controller.dart.dart';
-import 'package:quizzle/features/home/views/home.dart';
+import 'package:quizzle/features/game%20mode/views/game_mode.dart';
+import 'package:quizzle/features/quiz/views/quiz_categories.dart';
 import 'package:quizzle/shared/game_button.dart';
 import 'package:quizzle/utils/avatar_url_gen.dart';
 import 'package:quizzle/utils/dialog.dart';
@@ -24,8 +25,8 @@ class _AvatarSetupState extends ConsumerState<AvatarSetup> {
   Widget build(BuildContext context) {
     ref.listen(userDataControllerProvider, (previous, next) {
       if (next == Status.data) {
-        context.push(const Home());
-      } else if(next == Status.error){
+        context.push(const QuizCategories());
+      } else if (next == Status.error) {
         showCustomDialog(
           context: context,
           title: "Error",
@@ -88,8 +89,6 @@ class _AvatarSetupState extends ConsumerState<AvatarSetup> {
                     selectedAvatar!,
                   );
             },
-            height: 10.h,
-            width: 100.w,
             buttonColor: Colors.blue,
             labelColor: Colors.white,
             labelFontSize: 30,

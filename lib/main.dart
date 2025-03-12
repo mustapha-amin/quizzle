@@ -1,3 +1,4 @@
+import 'package:quizzle/features/quiz/views/quiz_categories.dart';
 import 'package:shadcn_ui/shadcn_ui.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -9,7 +10,7 @@ import 'core/typedefs.dart';
 import 'core/providers.dart';
 import 'dart:developer';
 import 'package:flex_color_scheme/flex_color_scheme.dart';
-import 'features/home/views/home.dart';
+import 'features/game mode/views/game_mode.dart';
 
 FutureVoid main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -52,7 +53,7 @@ class _MyAppState extends ConsumerState<MyApp> {
               brightness: Brightness.light),
           home: firebaseAuth.currentUser == null
               ? const AuthScreen()
-              : const Home(),
+              : const QuizCategories(),
         );
       },
     );

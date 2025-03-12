@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:quizzle/utils/textstyle.dart';
 import 'package:sizer/sizer.dart';
 
-class GameMode extends StatelessWidget {
+class GameModeWidget extends StatelessWidget {
   String img, label;
   VoidCallback onTap;
-  GameMode({
+  GameModeWidget({
     required this.img,
     required this.label,
     required this.onTap,
