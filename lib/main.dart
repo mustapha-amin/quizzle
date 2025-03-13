@@ -1,3 +1,4 @@
+import 'package:flutter/services.dart';
 import 'package:quizzle/features/quiz/views/quiz_categories.dart';
 import 'package:shadcn_ui/shadcn_ui.dart';
 import 'package:flutter/material.dart';
@@ -15,7 +16,9 @@ import 'features/game mode/views/game_mode.dart';
 FutureVoid main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
-  // await dotenv.load(fileName: ".env");
+ SystemChrome.setSystemUIOverlayStyle(
+      const SystemUiOverlayStyle(systemNavigationBarColor: Colors.transparent));
+  await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitDown, DeviceOrientation.portraitUp]);
   runApp(
     const ProviderScope(
       child: MyApp(),

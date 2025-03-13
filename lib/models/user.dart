@@ -1,24 +1,16 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 class User {
-  String? id, username, email, avatar;
-  int? allTimeScores, gamesPlayed;
+  String? id, username, email;
+  Map<int, List<int>>? scores;
 
-  User({
-    this.id,
-    this.username,
-    this.email,
-    this.avatar,
-    this.allTimeScores,
-    this.gamesPlayed,
-  });
+  User({this.id, this.username, this.email, this.scores});
 
   Map<String, dynamic> toJson() {
     return {
       "id": id,
       "username": username,
       "email": email,
-      "avatar": avatar,
-      "gamesPlayed": gamesPlayed,
-      "allTimeScores": allTimeScores,
+      "scores": scores,
     };
   }
 
@@ -27,9 +19,20 @@ class User {
       id: json["id"],
       username: json["username"],
       email: json["email"],
-      avatar: json["avatar"],
-      allTimeScores: json["allTimeScores"],
-      gamesPlayed: json["gamesPlayed"]
+      scores: json["scores"]
+    );
+  }
+
+  User copyWith({
+    String? id,
+    String? username,
+    String? email,
+    Map<int, List<int>>? scores,
+  }) {
+    return User(
+      username: username ?? this.username,
+      email: email ?? this.email,
+      scores: scores ?? this.scores,
     );
   }
 }

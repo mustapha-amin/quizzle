@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:quizzle/core/providers.dart';
@@ -28,7 +30,9 @@ class AuthRepo {
         accessToken: googleAuth.accessToken,
         idToken: googleAuth.idToken,
       );
+      log(credential.toString());
       final userCred = await firebaseAuth.signInWithCredential(credential);
+      log(userCred.toString());
       return userCred;
     } on FirebaseAuthException catch (e) {
       throw Exception(e.message);

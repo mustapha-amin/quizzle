@@ -62,11 +62,7 @@ class _AuthScreenState extends ConsumerState<AuthScreen> {
                     try {
                       ref
                           .read(authControllerNotifierProvider.notifier)
-                          .signInGoogle();
-                      Navigator.pushReplacement(context,
-                          MaterialPageRoute(builder: (context) {
-                        return const QuizCategories();
-                      }));
+                          .signInGoogle(context);
                     } catch (e) {
                       log(e.toString());
                     }

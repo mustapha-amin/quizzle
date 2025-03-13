@@ -85,8 +85,12 @@ class QuizCategoryWidget extends StatelessWidget {
                         Iconsax.book_1_copy,
                         size: 30,
                       ),
-                    _ => const Icon(
+                    QuizCategory.sports => const Icon(
                         Icons.sports_basketball_outlined,
+                        size: 30,
+                      ),
+                    _ => const Icon(
+                        Iconsax.computing_copy,
                         size: 30,
                       ),
                   }),

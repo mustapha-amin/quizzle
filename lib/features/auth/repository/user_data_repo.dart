@@ -26,8 +26,7 @@ class UserDataRepo {
         id: firebaseAuth.currentUser!.uid,
         username: username,
         email: firebaseAuth.currentUser!.email,
-        avatar: avatarUrl,
-        allTimeScores: 0,
+        scores: {},
       );
       await firebaseFirestore
           .collection("users")
@@ -47,14 +46,16 @@ class UserDataRepo {
         .map((snap) => k.User.fromJson(snap.data()!));
   }
 
-  FutureVoid saveScore(int score) async {
+  FutureVoid saveScore(int score, int categoryIndex, k.User user) async {
     try {
+      final scoresList = user.scores![categoryIndex];
       await firebaseFirestore
           .collection("users")
           .doc(firebaseAuth.currentUser!.uid)
           .update({
-        "allTimeScore": FieldValue.increment(score),
-        "gamesPlayed": FieldValue.increment(1),
+        "scores": user.scores!.update(
+            categoryIndex, (value) => [...?scoresList, score],
+            ifAbsent: () => [score])
       });
     } catch (e) {
       log(e.toString());

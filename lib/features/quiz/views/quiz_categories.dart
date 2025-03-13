@@ -4,6 +4,7 @@ import 'package:figma_squircle/figma_squircle.dart';
 import 'package:flutter/material.dart';
 import 'package:quizzle/core/enums.dart';
 import 'package:quizzle/core/providers.dart';
+import 'package:quizzle/features/auth/controllers/auth_controllers.dart';
 import 'package:quizzle/features/game%20mode/views/game_mode.dart';
 import 'package:quizzle/utils/extensions.dart';
 import 'package:quizzle/utils/textstyle.dart';
@@ -28,20 +29,31 @@ class _QuizCategoriesState extends ConsumerState<QuizCategories> {
       body: CustomScrollView(
         slivers: [
           SliverAppBar(
-            toolbarHeight: 150,
+            toolbarHeight: 100,
             actions: [
-              ShadButton(
-                onPressed: (){},
-                child: Text(
-                  "Sign in",
-                  style: kTextStyle(14, color: Colors.white),
-                ),
-                backgroundColor: Colors.grey[900],
-                decoration: ShadDecoration(
-                    border: ShadBorder(
-                  radius: BorderRadius.circular(24),
-                )),
-              ).padX(14),
+              ref.watch(firebaseAuthProvider).currentUser!.isAnonymous
+                  ? ShadButton(
+                      onPressed: () {
+                        ref
+                            .read(authControllerNotifierProvider.notifier)
+                            .signInGoogle(context);
+                      },
+                      child: Text(
+                        "Sign in",
+                        style: kTextStyle(14, color: Colors.white),
+                      ),
+                      backgroundColor: Colors.grey[900],
+                      decoration: ShadDecoration(
+                          border: ShadBorder(
+                        radius: BorderRadius.circular(24),
+                      )),
+                    ).padX(14)
+                  : CircleAvatar(
+                      backgroundImage: NetworkImage(ref
+                          .watch(firebaseAuthProvider)
+                          .currentUser!
+                          .photoURL!),
+                    ).padX(14),
             ],
             title: Text(
               "Hi, ${ref.watch(firebaseAuthProvider).currentUser!.isAnonymous ? "Guest" : ref.watch(firebaseAuthProvider).currentUser!.displayName}",
@@ -71,19 +83,14 @@ class _QuizCategoriesState extends ConsumerState<QuizCategories> {
                     ).padX(20),
                     Expanded(
                       child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
+                          Text("🧠 Power Up!",
+                              style: kTextStyle(28,
+                                  color: Colors.white, isBold: true)),
                           Text(
-                            "Test Your Knowledge!",
-                            style: kTextStyle(28,
-                                color: Colors.white, isBold: true),
-                          ),
-                          Text(
-                            "Choose a category and challenge yourself with fun and exciting quizzes",
-                            style: kTextStyle(
-                              14,
-                              color: Colors.white,
-                            ),
-                          )
+                              "Dive into fun quizzes! Choose your category. 🚀",
+                              style: kTextStyle(14, color: Colors.white)),
                         ],
                       ),
                     )
@@ -246,6 +253,11 @@ class _QuizCategoriesState extends ConsumerState<QuizCategories> {
                   );
                 })
               ]),
+            ),
+          ),
+          SliverToBoxAdapter(
+            child: SizedBox(
+              height: 10,
             ),
           )
         ],

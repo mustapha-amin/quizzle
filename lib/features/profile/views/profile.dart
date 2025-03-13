@@ -20,11 +20,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
               tag: 'avatar',
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(20),
-                child: ref.watch(currentUserProvider).when(
-                      data: (user) => Image.network(user!.avatar!),
-                      error: (_, __) => const Icon(Icons.error),
-                      loading: () => const CircularProgressIndicator(),
-                    ),
+                child: Image.network(ref.watch(firebaseAuthProvider).currentUser!.photoURL!)
               ),
             ),
           )

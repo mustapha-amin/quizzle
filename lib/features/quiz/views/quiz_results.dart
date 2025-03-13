@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:figma_squircle/figma_squircle.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -115,6 +117,7 @@ class _QuizResultsState extends ConsumerState<QuizResults> {
                 ShadButton(
                   onPressed: () {
                     Navigator.of(context).popUntil((route) => route.isFirst);
+                    log(quizProgressCtrl.scoreAndRemark!.$1.toString());
                   },
                   child: Text(
                     "Return home",

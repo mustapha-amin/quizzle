@@ -28,7 +28,7 @@ class QuizRepo {
       final response = await _dio.post(
         "/chat/completions",
         data: {
-          "model": "deepseek/deepseek-chat:free",
+          "model": generateRandomModel(),
           "messages": [
             {"role": "system", "content": generatePrompt()},
             {
