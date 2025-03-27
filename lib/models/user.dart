@@ -1,16 +1,16 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 class User {
   String? id, username, email;
-  Map<int, List<int>>? scores;
+  Map<int, int>? highScores;
 
-  User({this.id, this.username, this.email, this.scores});
+  User({this.id, this.username, this.email, this.highScores});
 
   Map<String, dynamic> toJson() {
     return {
       "id": id,
       "username": username,
       "email": email,
-      "scores": scores,
+      "highScores": highScores,
     };
   }
 
@@ -19,7 +19,7 @@ class User {
       id: json["id"],
       username: json["username"],
       email: json["email"],
-      scores: json["scores"]
+      highScores: json["highScores"]
     );
   }
 
@@ -27,12 +27,12 @@ class User {
     String? id,
     String? username,
     String? email,
-    Map<int, List<int>>? scores,
+    Map<int, int>? highScores,
   }) {
     return User(
       username: username ?? this.username,
       email: email ?? this.email,
-      scores: scores ?? this.scores,
+      highScores: highScores ?? this.highScores,
     );
   }
 }

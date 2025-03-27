@@ -26,7 +26,7 @@ class UserDataRepo {
         id: firebaseAuth.currentUser!.uid,
         username: username,
         email: firebaseAuth.currentUser!.email,
-        scores: {},
+        highScores: {},
       );
       await firebaseFirestore
           .collection("users")
@@ -57,14 +57,13 @@ class UserDataRepo {
   FutureVoid saveScore(int score, int categoryIndex) async {
     try {
       final user = await fetchUserDataFuture();
-      final scoresList = user.scores![categoryIndex];
       await firebaseFirestore
           .collection("users")
           .doc(firebaseAuth.currentUser!.uid)
           .update({
-        "scores": user.scores!.update(
-            categoryIndex, (value) => [...?scoresList, score],
-            ifAbsent: () => [score])
+        "highScores": user.highScores!.update(
+            categoryIndex, (value) => score,
+            ifAbsent: () => score)
       });
     } catch (e) {
       log(e.toString());
