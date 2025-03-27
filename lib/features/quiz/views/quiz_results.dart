@@ -7,6 +7,7 @@ import 'package:iconsax_flutter/iconsax_flutter.dart';
 import 'package:quizzle/core/enums.dart';
 import 'package:quizzle/features/quiz/controllers/quiz_fetcher.dart';
 import 'package:quizzle/features/quiz/controllers/quiz_progress_ctrl.dart';
+import 'package:quizzle/features/quiz/widgets/result_card.dart';
 import 'package:quizzle/utils/extensions.dart';
 import 'package:quizzle/utils/textstyle.dart';
 import 'package:shadcn_ui/shadcn_ui.dart';
@@ -28,112 +29,33 @@ class _QuizResultsState extends ConsumerState<QuizResults> {
     final quizProgressCtrl = ref.watch(quizProgressNotifierProvider);
     final quizQuestionsCtrl = ref.watch(quizQuistionsCtrlProvider);
     return Scaffold(
+      appBar: AppBar(
+        title: Text(
+          "Results",
+          style: kTextStyle(18, isBold: true),
+        ),
+        centerTitle: true,
+      ),
       body: Column(
         spacing: 10,
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          SizedBox(height: 32),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Stack(
-                  alignment: Alignment.center,
-                  children: [
-                    SizedBox(
-                      height: 35.w,
-                      width: 35.w,
-                      child: TweenAnimationBuilder(
-                        curve: Curves.easeInOutCubic,
-                        tween: Tween<double>(
-                          begin: 0,
-                          end: quizProgressCtrl.scoreAndRemark!.$1 / 20,
-                        ),
-                        duration: const Duration(milliseconds: 1500),
-                        builder: (context, value, _) {
-                          return CircularProgressIndicator(
-                            value: value,
-                            backgroundColor: Colors.grey[400],
-                            strokeWidth: 8,
-                          );
-                        },
-                      ),
-                    ).padY(6),
-                    Column(
-                      children: [
-                        Text.rich(
-                          TextSpan(
-                            text: '${quizProgressCtrl.scoreAndRemark!.$1}',
-                            style: kTextStyle(
-                              25,
-                              color: switch (
-                                  quizProgressCtrl.scoreAndRemark!.$2) {
-                                QuizRemark.poor => Colors.red,
-                                QuizRemark.fair => Colors.amber,
-                                QuizRemark.good => Colors.amber[700],
-                                QuizRemark.veryGood => Colors.green[400],
-                                QuizRemark.excellent => Colors.green[800],
-                              }!,
-                              isBold: true,
-                            ),
-                            children: [
-                              TextSpan(
-                                text: ' / ',
-                                style: kTextStyle(
-                                  30,
-                                  color: Colors.black,
-                                ),
-                              ),
-                              TextSpan(
-                                text: '20 ',
-                                style: kTextStyle(
-                                  30,
-                                  color: Colors.green[800]!,
-                                  isBold: true,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ).centralize(),
-                        Text(
-                          quizProgressCtrl.scoreAndRemark!.$2.message,
-                          style: kTextStyle(
-                            20,
-                            isBold: true,
-                            color: switch (
-                                quizProgressCtrl.scoreAndRemark!.$2) {
-                              QuizRemark.poor => Colors.red,
-                              QuizRemark.fair => Colors.amber,
-                              QuizRemark.good => Colors.amber[700],
-                              QuizRemark.veryGood => Colors.green[400],
-                              QuizRemark.excellent => Colors.green[800],
-                            }!,
-                          ),
-                        ).centralize(),
-                      ],
-                    ),
-                  ],
+                ResultCard(
+                  quizRemark: quizProgressCtrl.scoreAndRemark!.$2,
+                  score: quizProgressCtrl.scoreAndRemark!.$1,
                 ),
-                ShadButton(
+                FilledButton.icon(
                   onPressed: () {
-                    Navigator.of(context).popUntil((route) => route.isFirst);
-                    log(quizProgressCtrl.scoreAndRemark!.$1.toString());
+                    Navigator.popUntil(
+                        context, (predicate) => predicate.isFirst);
                   },
-                  child: Text(
-                    "Return home",
-                    style: kTextStyle(15, color: Colors.white),
-                  ),
-                ).centralize(),
-                const SizedBox(
-                  height: 5,
-                ),
-                Text(
-                  "Results",
-                  style: kTextStyle(18, isBold: true),
-                ).centralize(),
-                const SizedBox(
-                  height: 10,
-                ),
+                  label: Text("Home"),
+                  icon: Icon(Iconsax.home),
+                ).padAll(8).centralize(),
                 Column(
                   spacing: 8,
                   crossAxisAlignment: CrossAxisAlignment.start,

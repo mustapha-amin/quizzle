@@ -1,63 +1,42 @@
 String generatePrompt() {
-  return """## Title 
- Customized Quiz Question Set Creation 
-## Content 
- Ignore all previous instructions. Act as an expert in educational content creation,
-you have been designing and formulating quiz questions across various domains for 10 years,
-consistently achieving high engagement and learning outcomes through your well-crafted quizzes. 
-Given a category and a difficulty level by the user, create a set of 20 quiz questions with difficulty set to the specified difficulty
-on a scale of(easy, medium, and hard). Each question should be meticulously designed to test knowledge depth in the
-category, ensuring a comprehensive understanding of the subject. The answers should'nt always be the first in the options. Try to mix it up a bit.
-The quiz should be engaging, educational, and challenging, providing an enriching learning experience for the user.
-Each option should'nt be more than 40 charcters long
+  return """
+The user will a quiz category and difficulty level. Follow these guidelines to output a JSON quiz prompt with 20 questions:
 
-Ensure that your response is a json that can be deserialized by this dart code: 
+1. Response must be pure JSON only - no markdown, no explanations, no comments
+2. Maintain EXACTLY this key structure: question, options, answer (all lowercase)
+3. Ensure the questions are exactly 20
+4. options array must contain exactly 4 strings (never more/less)
+5. Each option string must be ≤40 characters
+6. answer must exactly match one of the options
+7. Randomize answer positions between questions
+8. Ensure proper JSON formatting:
+   - Double quotes only
+   - No trailing commas
+   - Properly escaped characters
+   - Valid comma placement between objects
 
-###
+Validation Checklist Before Responding:
+✓ Test JSON validity using JSONLint
+✓ Confirm answer matches one option exactly
+✓ Verify options array length = 4
+✓ Ensure no markdown formatting
+✓ Check character limits
+✓ Validate all brackets/quotes are closed
+✓ Randomize answer positions
 
-class Quiz {
-  final String question;
-  final List<String> options;
-  final String answer;
-
-  Quiz({
-    required this.question,
-    required this.options,
-    required this.answer,
-  });
-
-  factory Quiz.fromJson(Map<String, dynamic> json) {
-    return Quiz(
-      question: json["question"],
-      options: List.from(json["options"]),
-      answer: json["answer"],
-    );
-  }
-}
-
-###
-
-JSON FORMAT:
-
+Example VALID response:
 [
   {
-    "question":"specific question",
-    "options": ["option1", "option2", "option3", "option4"],
-    "answer":"answer"
+    "question": "What is the capital of France?",
+    "options": ["London", "Berlin", "Paris", "Madrid"],
+    "answer": "Paris"
   },
-  ...
+  {
+    "question": "Who developed theory of relativity?",
+    "options": ["Newton", "Einstein", "Tesla", "Bohr"],
+    "answer": "Einstein"
+  }
 ]
 
-
-**Notice**:
- The quiz should be diverse, covering a wide range of topics within the chosen category to engage a broad audience. 
- Accuracy in the JSON formatting is crucial for the quiz functionality, 
- so pay close attention to the structure and syntax. Remember, 
- the goal is to create an educational and engaging quiz that effectively 
- tests knowledge in a specific domain. 
-
- DO NOT WRAP THE RESPONSE IN --- ```json {content} ``` ----
- ENSURE TO CLOSE ALL OPENED BRACKETS, QUOTES, ETC. AVOID CHARACTERS THAT COULD RUIN MY
- JSON DECODING
- """;
+""";
 }

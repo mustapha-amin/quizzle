@@ -36,7 +36,7 @@ class _QuizCategoriesState extends ConsumerState<QuizCategories> {
                       onPressed: () {
                         ref
                             .read(authControllerNotifierProvider.notifier)
-                            .signInGoogle(context);
+                            .signInGoogle(context, ref);
                       },
                       child: Text(
                         "Sign in",

@@ -1,6 +1,9 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
+import 'package:quizzle/core/providers.dart';
+import 'package:quizzle/features/auth/controllers/user_data_controller.dart.dart';
+import 'package:quizzle/features/game%20mode/views/game_mode.dart';
 import 'package:shadcn_ui/shadcn_ui.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:quizzle/features/quiz/controllers/quiz_fetcher.dart';
@@ -169,6 +172,23 @@ class _QuizScreenState extends ConsumerState<QuizScreen> {
                               ref
                                   .read(quizProgressNotifierProvider.notifier)
                                   .computeScore();
+                              if (!ref
+                                  .watch(firebaseAuthProvider)
+                                  .currentUser!
+                                  .isAnonymous) {
+                                ref
+                                    .read(userDataControllerProvider.notifier)
+                                    .saveScore(
+                                      ref
+                                          .watch(quizProgressNotifierProvider)
+                                          .scoreAndRemark!
+                                          .$1,
+                                      ref
+                                          .read(quizCategoryProvider.notifier)
+                                          .state!
+                                          .index,
+                                    );
+                              }
                               Navigator.pushReplacement(
                                 context,
                                 MaterialPageRoute(

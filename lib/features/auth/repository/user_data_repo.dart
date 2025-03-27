@@ -20,7 +20,7 @@ class UserDataRepo {
 
   UserDataRepo({required this.firebaseFirestore, required this.firebaseAuth});
 
-  FutureVoid saveUserData(String username, String avatarUrl) async {
+  FutureVoid saveUserData(String username) async {
     try {
       k.User user = k.User(
         id: firebaseAuth.currentUser!.uid,
@@ -46,8 +46,17 @@ class UserDataRepo {
         .map((snap) => k.User.fromJson(snap.data()!));
   }
 
-  FutureVoid saveScore(int score, int categoryIndex, k.User user) async {
+  Future<k.User> fetchUserDataFuture() async {
+    final doc = await firebaseFirestore
+        .collection("users")
+        .doc(firebaseAuth.currentUser!.uid)
+        .get();
+    return k.User.fromJson(doc.data()!);
+  }
+
+  FutureVoid saveScore(int score, int categoryIndex) async {
     try {
+      final user = await fetchUserDataFuture();
       final scoresList = user.scores![categoryIndex];
       await firebaseFirestore
           .collection("users")

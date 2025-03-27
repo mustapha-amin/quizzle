@@ -10,8 +10,6 @@ import 'package:firebase_core/firebase_core.dart';
 import 'core/typedefs.dart';
 import 'core/providers.dart';
 import 'dart:developer';
-import 'package:flex_color_scheme/flex_color_scheme.dart';
-import 'features/game mode/views/game_mode.dart';
 
 FutureVoid main() async {
   WidgetsFlutterBinding.ensureInitialized();

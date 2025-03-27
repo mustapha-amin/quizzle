@@ -19,10 +19,10 @@ class UserDataNotifier extends StateNotifier<Status> {
   UserDataRepo userDataRepo;
   UserDataNotifier(this.userDataRepo) : super(Status.idle);
 
-  FutureVoid saveUserData(String username, String avatarUrl) async {
+  FutureVoid saveUserData(String username) async {
     try {
       state = Status.loading;
-      await userDataRepo.saveUserData(username, avatarUrl);
+      await userDataRepo.saveUserData(username);
       state = Status.data;
     } catch (e) {
       state = Status.error;
@@ -32,11 +32,10 @@ class UserDataNotifier extends StateNotifier<Status> {
   FutureVoid saveScore(
     int score,
     int categoryIndex,
-    User user,
   ) async {
     try {
       state = Status.loading;
-      await userDataRepo.saveScore(score, categoryIndex, user);
+      await userDataRepo.saveScore(score, categoryIndex);
       state = Status.data;
     } catch (e) {
       state = Status.error;

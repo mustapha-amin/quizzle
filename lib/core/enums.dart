@@ -31,14 +31,15 @@ enum AIModel {
 }
 
 enum QuizRemark {
-  poor("Poor"),
-  fair("Fair"),
-  good("Good"),
-  veryGood("Very good"),
-  excellent("Excellent");
+  poor("Needs Improvement!", "Poor"),
+  fair("You can do better!", "Fair"),
+  good("Good job!", "Good"),
+  veryGood("Very good, keep it up!", "Very good"),
+  excellent("Excellent! You aced it!", "Excellent");
 
-  const QuizRemark(this.message);
+  const QuizRemark(this.message, this.name);
   final String message;
+  final String name;
 }
 
 String generateRandomModel() {

@@ -1,22 +1,20 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart' show SpinKitChasingDots;
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:iconsax_flutter/iconsax_flutter.dart';
 import 'package:quizzle/core/enums.dart';
 import 'package:quizzle/core/providers.dart';
-import 'package:quizzle/features/auth/controllers/auth_controllers.dart';
 import 'package:quizzle/features/game%20mode/widgets/game_mode_widget.dart';
 import 'package:quizzle/features/quiz/controllers/quiz_fetcher.dart';
-import 'package:quizzle/features/quiz/views/quiz_categories.dart';
 import 'package:quizzle/features/quiz/views/quiz_screen.dart';
 import 'package:quizzle/utils/dialog.dart';
 import 'package:quizzle/utils/extensions.dart';
-import 'package:shadcn_ui/shadcn_ui.dart';
-import 'package:sizer/sizer.dart';
 
 import '../../../utils/textstyle.dart';
+
+final quizCategoryProvider = StateProvider<QuizCategory?>((ref) {
+  return null;
+});
 
 class GameMode extends ConsumerStatefulWidget {
   QuizCategory? quizCategory;
@@ -67,6 +65,8 @@ class _GameModeState extends ConsumerState<GameMode> {
                         iconData: Iconsax.user,
                         label: "Single player",
                         onTap: () {
+                          ref.read(quizCategoryProvider.notifier).state =
+                              widget.quizCategory;
                           ref
                               .read(quizQuistionsCtrlProvider.notifier)
                               .fetchQuestions(
@@ -97,7 +97,7 @@ class _GameModeState extends ConsumerState<GameMode> {
               ),
               Center(
                 child: switch (ref.watch(quizQuistionsCtrlProvider).isLoading) {
-                  true => SpinKitChasingDots(
+          true => SpinKitChasingDots(
                       size: 80,
                       color: Theme.of(context).primaryColor,
                       duration: const Duration(milliseconds: 800),

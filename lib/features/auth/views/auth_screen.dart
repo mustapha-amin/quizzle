@@ -62,7 +62,7 @@ class _AuthScreenState extends ConsumerState<AuthScreen> {
                     try {
                       ref
                           .read(authControllerNotifierProvider.notifier)
-                          .signInGoogle(context);
+                          .signInGoogle(context, ref);
                     } catch (e) {
                       log(e.toString());
                     }
