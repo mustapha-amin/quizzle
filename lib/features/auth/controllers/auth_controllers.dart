@@ -54,11 +54,15 @@ class AuthControllerNotifier extends StateNotifier<AuthState> {
     }
   }
 
-  Future<void> signInAnon() async {
+  Future<void> signInAnon(BuildContext context) async {
     state = state.copyWith(isLoading: true);
     try {
       final userCred = await authRepo.signInAnon();
       state = state.copyWith(isLoading: false, userCredential: userCred);
+      Navigator.pushReplacement(context,
+                      MaterialPageRoute(builder: (context) {
+                    return const QuizCategories();
+                  }));
     } catch (e, _) {
       state = state.copyWith(isLoading: false, error: e.toString());
     }

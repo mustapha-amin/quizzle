@@ -94,8 +94,8 @@ flutter:
   # see https://flutter.dev/custom-fonts/#from-packages
 flutter_native_splash:
   color: "#E6E8E0"
-  image: assets/images/logo.png
+  image: assets/images/splash.png
 
   android_12:
-    image: assets/images/logo.png
+    image: assets/images/splash.png
     color: "#E6E8E0"

@@ -1,0 +1,1 @@
+C:\Users\USER\Documents\flutter projs\quizzle\build\app\intermediates\cxx\RelWithDebInfo\6e6u45k3\obj\arm64-v8a

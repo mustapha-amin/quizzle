@@ -87,8 +87,8 @@ class _AuthScreenState extends ConsumerState<AuthScreen> {
                 onPressed: () {
                   ref
                       .read(authControllerNotifierProvider.notifier)
-                      .signInAnon();
-                 
+                      .signInAnon(context);
+                  
                 },
                 child: Text(
                   "Continue as guest",
