@@ -20,6 +20,17 @@ class QuizRepo {
 
   QuizRepo(this._dio);
 
+  String? extractJsonString(String response) {
+    final regex = RegExp(r'\[\s*{.*?}\s*]', dotAll: true);
+    final match = regex.firstMatch(response);
+
+    if (match != null) {
+      return match.group(0);
+    }
+
+    return null;
+  }
+
   Future<List<Quiz>> getQuizQuestions(
     QuizCategory quizCategory,
     QuizDifficulty difficulty,
@@ -43,18 +54,18 @@ class QuizRepo {
 
       final contentString =
           response.data["choices"][0]["message"]["content"] as String;
-      final List<dynamic> responseJson = jsonDecode(contentString);
+      final List<dynamic> responseJson = jsonDecode(extractJsonString(contentString)!);
       return responseJson.map((json) => Quiz.fromJson(json)).toList();
     } on SocketException catch (_) {
       log("Please check your internet and try again");
-      throw Exception("Please check your internet and try again");
+      throw "Please check your internet and try again";
     } on FormatException catch (e) {
       log(e.source);
       log(e.toString());
-      throw Exception("An error occured: ${e.message}");
+      throw "An unexpected error occured. Please try again.";
     } catch (e) {
       log(e.toString());
-      throw Exception("An error occured: ${e.toString()}");
+      throw "An unexpected error occured. Please try again.";
     }
   }
 }

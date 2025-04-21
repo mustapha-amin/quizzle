@@ -33,10 +33,32 @@ class _GameModeState extends ConsumerState<GameMode> {
         context.push(const QuizScreen());
       }
       if (next.error!.isNotEmpty) {
-        showCustomDialog(
+        showDialog(
           context: context,
-          title: "Error",
-          message: next.error!,
+          builder: (context) {
+            return AlertDialog(
+              title: Text("Error"),
+              content: Text(next.error!),
+              actions: [
+                TextButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                    ref.read(quizQuistionsCtrlProvider.notifier).fetchQuestions(
+                          widget.quizCategory!,
+                          widget.quizDifficulty!,
+                        );
+                  },
+                  child: const Text("Retry"),
+                ),
+                TextButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                  child: Text("Cancel"),
+                )
+              ],
+            );
+          },
         );
       }
     });
@@ -97,7 +119,7 @@ class _GameModeState extends ConsumerState<GameMode> {
               ),
               Center(
                 child: switch (ref.watch(quizQuistionsCtrlProvider).isLoading) {
-          true => SpinKitChasingDots(
+                  true => SpinKitChasingDots(
                       size: 80,
                       color: Theme.of(context).primaryColor,
                       duration: const Duration(milliseconds: 800),

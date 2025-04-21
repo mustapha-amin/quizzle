@@ -161,6 +161,11 @@ class _QuizScreenState extends ConsumerState<QuizScreen> {
                         label: currentQuestionIndex == 20 ? "Submit" : "Next",
                         callback: () {
                           log(quizProgress.selectedAnswers.toString());
+                          log(ref
+                              .read(quizCategoryProvider.notifier)
+                              .state!
+                              .index
+                              .toString());
                           if (ref
                               .read(quizProgressNotifierProvider.notifier)
                               .answerSlotNotEmpty(quizProgress.index)) {
@@ -186,7 +191,7 @@ class _QuizScreenState extends ConsumerState<QuizScreen> {
                                       ref
                                           .read(quizCategoryProvider.notifier)
                                           .state!
-                                          .index,
+                                          .name,
                                     );
                               }
                               Navigator.pushReplacement(

@@ -31,11 +31,11 @@ class UserDataNotifier extends StateNotifier<Status> {
 
   FutureVoid saveScore(
     int score,
-    int categoryIndex,
+    String category,
   ) async {
     try {
       state = Status.loading;
-      await userDataRepo.saveScore(score, categoryIndex);
+      await userDataRepo.saveScore(score, category);
       state = Status.data;
     } catch (e) {
       state = Status.error;

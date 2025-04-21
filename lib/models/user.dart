@@ -1,7 +1,7 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 class User {
   String? id, username, email;
-  Map<int, int>? highScores;
+  Map<String, int>? highScores;
 
   User({this.id, this.username, this.email, this.highScores});
 
@@ -10,16 +10,19 @@ class User {
       "id": id,
       "username": username,
       "email": email,
-      "highScores": highScores,
+      "highScores": highScores as Map<String, int>,
     };
   }
 
   factory User.fromJson(Map<String, dynamic> json) {
+    Map<String, int>? highScores = json['highScores'] != null
+        ? Map<String, int>.from(json['highScores'] as Map<String, dynamic>)
+        : null;
     return User(
       id: json["id"],
       username: json["username"],
       email: json["email"],
-      highScores: json["highScores"]
+      highScores: highScores,
     );
   }
 
@@ -27,7 +30,7 @@ class User {
     String? id,
     String? username,
     String? email,
-    Map<int, int>? highScores,
+    Map<String, int>? highScores,
   }) {
     return User(
       username: username ?? this.username,

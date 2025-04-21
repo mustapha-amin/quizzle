@@ -52,7 +52,7 @@ class _MyAppState extends ConsumerState<MyApp> {
           theme: ShadThemeData(
               colorScheme: ShadColorScheme.fromName('green'),
               brightness: Brightness.light),
-          home: firebaseAuth.currentUser == null
+          home: firebaseAuth.currentUser == null || !firebaseAuth.currentUser!.isAnonymous
               ? const AuthScreen()
               : const QuizCategories(),
         );

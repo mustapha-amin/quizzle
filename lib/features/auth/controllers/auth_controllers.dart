@@ -34,9 +34,11 @@ class AuthControllerNotifier extends StateNotifier<AuthState> {
             .saveUserData(userCred.user!.displayName!);
       }
       state = state.copyWith(isLoading: false, userCredential: userCred);
-      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) {
+      if(context.mounted){
+        Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) {
         return const QuizCategories();
       }));
+      }
     } catch (e, _) {
       state = state.copyWith(isLoading: false, error: e.toString());
     }
@@ -52,7 +54,7 @@ class AuthControllerNotifier extends StateNotifier<AuthState> {
     }
   }
 
-  void signInAnon() async {
+  Future<void> signInAnon() async {
     state = state.copyWith(isLoading: true);
     try {
       final userCred = await authRepo.signInAnon();

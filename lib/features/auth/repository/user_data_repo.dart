@@ -1,10 +1,11 @@
 import 'dart:developer';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_auth/firebase_auth.dart' hide User;
 import 'package:quizzle/core/typedefs.dart';
 import 'package:quizzle/models/user.dart' as k;
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:quizzle/models/user.dart';
 import '../../../core/providers.dart';
 
 final userDataRepoProvider = Provider((ref) {
@@ -54,19 +55,18 @@ class UserDataRepo {
     return k.User.fromJson(doc.data()!);
   }
 
-  FutureVoid saveScore(int score, int categoryIndex) async {
+  FutureVoid saveScore(int score, String category) async {
     try {
-      final user = await fetchUserDataFuture();
+      User user = await fetchUserDataFuture();
+     if(user.highScores![category] == null || user.highScores![category]! < score){
+       user.highScores![category] = score;
+     }
       await firebaseFirestore
           .collection("users")
           .doc(firebaseAuth.currentUser!.uid)
-          .update({
-        "highScores": user.highScores!.update(
-            categoryIndex, (value) => score,
-            ifAbsent: () => score)
-      });
-    } catch (e) {
-      log(e.toString());
+          .update(user.toJson());
+    } catch (e, stk) {
+      log(e.toString(), stackTrace: stk);
       throw Exception(e.toString());
     }
   }

@@ -88,10 +88,7 @@ class _AuthScreenState extends ConsumerState<AuthScreen> {
                   ref
                       .read(authControllerNotifierProvider.notifier)
                       .signInAnon();
-                  Navigator.pushReplacement(context,
-                      MaterialPageRoute(builder: (context) {
-                    return const QuizCategories();
-                  }));
+                 
                 },
                 child: Text(
                   "Continue as guest",

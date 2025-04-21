@@ -207,6 +207,7 @@ class _QuizCategoriesState extends ConsumerState<QuizCategories> {
                                       child: ShadButton.ghost(
                                         onPressed: () {
                                           Navigator.of(context).pop();
+                                          initial = 0;
                                         },
                                         child: Text(
                                           "Cancel",
@@ -248,7 +249,9 @@ class _QuizCategoriesState extends ConsumerState<QuizCategories> {
                             );
                           });
                         },
-                      );
+                      ).then((_) {
+                        initial = 0;
+                      });
                     },
                   );
                 })

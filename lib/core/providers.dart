@@ -10,12 +10,11 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:quizzle/core/env.dart';
 import 'package:quizzle/features/auth/repository/user_data_repo.dart';
 
-// final geminiProvider = Provider((ref) {
-//   return GenerativeModel(model: "gemini-pro", apiKey: "AIzaSyCfYN2lf-Ywr04vXXJBEmBYuRzt45h__SM");
-// });
 
 final dioProvider = Provider<Dio>((ref) {
   return Dio(BaseOptions(
+    
+    receiveTimeout: Duration(milliseconds: 800),
     baseUrl: "https://openrouter.ai/api/v1",
     headers: {
       "Authorization": "Bearer ${Env.deepseekApiKey}",

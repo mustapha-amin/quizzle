@@ -16,4 +16,6 @@ class Quiz {
       answer: json["answer"],
     );
   }
+  
 }
+
